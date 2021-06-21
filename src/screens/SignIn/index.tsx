@@ -17,11 +17,14 @@ export function SignIn() {
 
       <View style={styles.content}>
         <Text style={styles.title}>
-          Conecte-se{`\n`}e organize suas{`\n`}jogatinas
+          Conecte-se{'\n'}
+          e organize suas{'\n'}
+          jogatinas
         </Text>
 
         <Text style={styles.subtitle}>
-          Crie grupos para jogar seus games{`\n`}favoritos com seus amigos
+          Crie grupos para jogar seus games{'\n'}
+          favoritos com seus amigos
         </Text>
 
         <ButtonIcon
