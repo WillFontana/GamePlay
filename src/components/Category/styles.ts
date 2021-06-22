@@ -11,17 +11,17 @@ export const styles = StyleSheet.create({
     marginRight: 8,
   },
   content: {
-    width: 100,
+    width: 116,
     height: 116,
-    backgroundColor: theme.colors.secondary40,
     borderRadius: 8,
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 7
+    justifyContent: 'space-between',
+    paddingVertical: 20
   },
   checkbox: {
-    alignSelf: 'flex-end',
-    marginRight: 7,
+    position: 'absolute',
+    top: 7,
+    right: 7,
     borderRadius: 3
   },
   checked: {
@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
   },
   title: {
-    fontFamily: theme.fonts.title500,
+    fontFamily: theme.fonts.title700,
     color: theme.colors.heading,
     fontSize: 15,
   },
