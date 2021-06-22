@@ -8,7 +8,7 @@ import DiscordImg from "../../assets/discord.png";
 export function SignIn() {
   return (
     <View style={styles.container}>
-    
+
       <Image source={SignInImage} style={styles.image} resizeMode="stretch" />
 
       <View style={styles.content}>
