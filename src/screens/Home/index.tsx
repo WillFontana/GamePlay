@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import { Appointment } from "../../components/Appointment";
 import { ButtonAdd } from "../../components/ButtonAdd";
 import { CategorySelect } from "../../components/CategorySelect";
