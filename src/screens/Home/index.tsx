@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { View, FlatList } from "react-native";
+
 import { Appointment } from "../../components/Appointment";
 import { ButtonAdd } from "../../components/ButtonAdd";
 import { CategorySelect } from "../../components/CategorySelect";
 import { ListDivider } from "../../components/ListDivider";
 import { ListHeader } from "../../components/ListHeader";
 import { Profile } from "../../components/Profile";
+import { Background } from "../../components/Background";
+
 import { styles } from "./styles";
 
 export function Home() {
@@ -33,7 +36,7 @@ export function Home() {
   }
 
   return (
-    <View>
+    <Background>
       <View style={styles.header}>
         <Profile />
         <ButtonAdd />
@@ -54,6 +57,6 @@ export function Home() {
           ItemSeparatorComponent={() => <ListDivider />}
         />
       </View>
-    </View>
+    </Background>
   );
 }
