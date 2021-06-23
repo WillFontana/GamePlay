@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function Header({ title, action }: Props) {
-  const { secondary100, secondary40, heading, primary } = theme.colors;
+  const { secondary100, secondary40, heading } = theme.colors;
 
   const navigation = useNavigation();
 
