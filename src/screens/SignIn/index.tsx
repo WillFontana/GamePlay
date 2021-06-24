@@ -1,26 +1,24 @@
 import React from "react";
-import { View, Text, Image, Alert, ActivityIndicatorBase } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, Image, Alert, ActivityIndicator } from "react-native";
 
 import SignInImage from "../../assets/illustration.png";
 import DiscordImg from "../../assets/discord.png";
 
 import { styles } from "./styles";
-import { theme } from "../../global/styles/theme";
 
 import { ButtonIcon } from "../../components/ButtonIcon";
 import { Background } from "../../components/Background";
 import { useAuth } from "../../hooks/auth";
+import { theme } from "../../global/styles/theme";
 
 export function SignIn() {
-  const navigation = useNavigation();
   const { loading, signIn } = useAuth();
 
   async function handleSigIn() {
     try {
       await signIn();
     } catch (error) {
-      Alert.alert(error);
+      Alert.alert("Não foi possível autenticar a sessão!");
     }
   }
 
@@ -41,7 +39,7 @@ export function SignIn() {
           </Text>
 
           {loading ? (
-            <ActivityIndicatorBase color={theme.colors.primary} />
+            <ActivityIndicator color={theme.colors.primary} />
           ) : (
             <ButtonIcon
               imageSrc={DiscordImg}

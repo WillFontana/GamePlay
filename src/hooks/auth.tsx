@@ -60,7 +60,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         setUser({ ...userInfo.data, firstName, token: params.access_token });
       }
     } catch (error) {
-      throw new Error("Não foi possível autenticar a sessão!");
+      console.log(error);
     } finally {
       setLoading(false);
     }
