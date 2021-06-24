@@ -11,8 +11,10 @@ export const styles = StyleSheet.create({
     fontFamily: theme.fonts.text400,
     fontSize: 13,
     marginRight: 4,
-    textAlign: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 5
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    textAlignVertical: 'top',
+    borderWidth: 1,
+    borderColor: theme.colors.secondary50
   }
 });

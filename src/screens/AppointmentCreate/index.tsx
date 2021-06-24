@@ -29,11 +29,11 @@ export function AppointmentCreate() {
   const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
 
   function handleCategorySelect(categoryId: string) {
-    categoryId === category ? setCategory("") : setCategory(categoryId);
+    setCategory(categoryId);
   }
 
-  function handleOpenGuilds() {
-    setShowGuildsModal(true);
+  function handleToggleModal() {
+    setShowGuildsModal(!showGuildsModal);
   }
 
   function handleGuildSelect(guildSelect: GuildProps) {
@@ -42,11 +42,11 @@ export function AppointmentCreate() {
   }
 
   return (
-    <Background>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <Background>
         <ScrollView>
           <Header title="Agendar Partida" />
 
@@ -64,7 +64,7 @@ export function AppointmentCreate() {
             setCategory={handleCategorySelect}
           />
           <View style={styles.form}>
-            <RectButton onPress={handleOpenGuilds}>
+            <RectButton onPress={handleToggleModal}>
               <View style={styles.select}>
                 {guild.icon ? <GuildIcon /> : <View style={styles.image} />}
                 <View style={styles.selectBody}>
@@ -118,10 +118,10 @@ export function AppointmentCreate() {
             </View>
           </View>
         </ScrollView>
-        <ModalView visible={showGuildsModal}>
-          <Guilds handleGuildSelect={handleGuildSelect} />
-        </ModalView>
-      </KeyboardAvoidingView>
-    </Background>
+      </Background>
+      <ModalView visible={showGuildsModal} closeModal={handleToggleModal}>
+        <Guilds handleGuildSelect={handleGuildSelect} />
+      </ModalView>
+    </KeyboardAvoidingView>
   );
 }
