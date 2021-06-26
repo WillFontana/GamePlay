@@ -2,7 +2,6 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { Home } from "../screens/Home";
-import { SignIn } from "../screens/SignIn";
 import { AppointmentDetails } from "../screens/AppointmentDetails";
 
 import { theme } from "../global/styles/theme";
@@ -10,7 +9,7 @@ import { AppointmentCreate } from "../screens/AppointmentCreate";
 
 const { Navigator, Screen } = createStackNavigator();
 
-export function AuthRoutes() {
+export function AppRoutes() {
   return (
     <Navigator
       headerMode="none"
