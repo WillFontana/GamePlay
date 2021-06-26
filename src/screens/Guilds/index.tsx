@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, Alert } from "react-native";
 import { Guild, GuildProps } from "../../components/Guild";
 import { ListDivider } from "../../components/ListDivider";
 import { Load } from "../../components/Load";
@@ -16,10 +16,14 @@ export function Guilds({ handleGuildSelect }: Props) {
   const [loading, setLoading] = useState(true);
 
   async function fetchGuilds() {
-    const response = await api.get("/users/@me/guilds");
-
-    setGuilds(response.data);
-    setLoading(false);
+    try {
+      const { data } = await api.get("/users/@me/guilds");
+      setGuilds(data);
+    } catch (error) {
+      Alert.alert("Não foi possível carregar os servidores!");
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {

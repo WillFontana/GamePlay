@@ -5,9 +5,14 @@ import {
   View,
   ScrollView,
   Platform,
+  Alert,
+  ActivityIndicator,
   KeyboardAvoidingView,
 } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+import uuid from "react-native-uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Background } from "../../components/Background";
 import { Button } from "../../components/Button";
@@ -22,11 +27,20 @@ import { theme } from "../../global/styles/theme";
 import { Guilds } from "../Guilds";
 
 import { styles } from "./styles";
+import { COLLECTION_APPOINTMENTS } from "../../configs/database";
 
 export function AppointmentCreate() {
+  const navigation = useNavigation();
+
+  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("");
   const [showGuildsModal, setShowGuildsModal] = useState(false);
   const [guild, setGuild] = useState<GuildProps>({} as GuildProps);
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [hour, setHour] = useState("");
+  const [minute, setMinute] = useState("");
+  const [description, setDescription] = useState("");
 
   function handleCategorySelect(categoryId: string) {
     setCategory(categoryId);
@@ -39,6 +53,33 @@ export function AppointmentCreate() {
   function handleGuildSelect(guildSelect: GuildProps) {
     setGuild(guildSelect);
     setShowGuildsModal(false);
+  }
+
+  async function handleSave() {
+    const newAppointment = {
+      id: uuid.v4,
+      guild,
+      category,
+      date: `${day}/${month} às ${hour}:${minute}h`,
+      description,
+    };
+
+    try {
+      setLoading(true);
+      const storage = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
+
+      const appointments = storage ? JSON.parse(storage) : [];
+
+      await AsyncStorage.setItem(
+        COLLECTION_APPOINTMENTS,
+        JSON.stringify([...appointments, newAppointment])
+      );
+
+      navigation.navigate("Home");
+    } catch (error) {
+      Alert.alert("Não foi possível realizar o agendamento!");
+    }
+    setLoading(false);
   }
 
   return (
@@ -90,9 +131,9 @@ export function AppointmentCreate() {
                   Dia e Mês
                 </Text>
                 <View style={styles.column}>
-                  <SmallInput maxLength={2} />
+                  <SmallInput maxLength={2} onChangeText={setDay} />
                   <Text style={styles.divider}>/</Text>
-                  <SmallInput maxLength={2} />
+                  <SmallInput maxLength={2} onChangeText={setMonth} />
                 </View>
               </View>
               <View>
@@ -100,9 +141,9 @@ export function AppointmentCreate() {
                   Horário
                 </Text>
                 <View style={styles.column}>
-                  <SmallInput maxLength={2} />
+                  <SmallInput maxLength={2} onChangeText={setHour} />
                   <Text style={styles.divider}>:</Text>
-                  <SmallInput maxLength={2} />
+                  <SmallInput maxLength={2} onChangeText={setMinute} />
                 </View>
               </View>
             </View>
@@ -116,9 +157,14 @@ export function AppointmentCreate() {
               maxLength={100}
               numberOfLines={5}
               autoCorrect={false}
+              onChangeText={setDescription}
             />
             <View style={styles.footer}>
-              <Button title={"Agendar"} />
+              {loading ? (
+                <ActivityIndicator color={theme.colors.primary} />
+              ) : (
+                <Button title={"Agendar"} onPress={handleSave} />
+              )}
             </View>
           </View>
         </ScrollView>
