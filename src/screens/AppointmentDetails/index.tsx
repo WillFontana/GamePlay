@@ -60,20 +60,27 @@ export function AppointmentDetails() {
     }
   }
 
-  function handleShareInvite() {
+  async function handleShareInvite() {
     const message =
       Platform.OS === "ios"
         ? `Junte se a ${guildSelected.guild.name}`
         : widget.instant_invite;
-
-    Share.share({
-      message,
-      url: widget.instant_invite,
-    });
+    try {
+      await Share.share({
+        message,
+        url: widget.instant_invite,
+      });
+    } catch (error) {
+      Alert.alert("Não é possível se juntar ao servidor no momento!");
+    }
   }
 
-  function handleOpenGuild() {
-    Linking.openURL(widget.instant_invite);
+  async function handleOpenGuild() {
+    try {
+      await Linking.openURL(widget.instant_invite);
+    } catch (error) {
+      Alert.alert("Não foi possível gerar o link de compartilhamento?");
+    }
   }
 
   useEffect(() => {
