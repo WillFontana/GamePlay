@@ -1,13 +1,12 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import * as AuthSession from "expo-auth-session";
 
-import {
-  SCOPE,
-  CLIENT_ID,
-  REDIRECT_URI,
-  RESPONSE_TYPE,
-  CDN_IMAGE,
-} from "../configs";
+const { SCOPE } = process.env;
+const { CLIENT_ID } = process.env;
+const { REDIRECT_URI } = process.env;
+const { RESPONSE_TYPE } = process.env;
+const { CDN_IMAGE } = process.env;
+
 import { api } from "../services/api";
 
 type User = {
@@ -31,7 +30,8 @@ type AuthProviderProps = {
 
 type AutorizationResponse = AuthSession.AuthSessionResult & {
   params: {
-    access_token: string;
+    access_token?: string;
+    error?: string;
   };
 };
 
@@ -49,7 +49,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         authUrl,
       })) as AutorizationResponse;
 
-      if (type === "success") {
+      if (type === "success" && !params.error) {
         api.defaults.headers.authorization = `Bearer ${params.access_token}`;
 
         const userInfo = await api.get("/users/@me");
