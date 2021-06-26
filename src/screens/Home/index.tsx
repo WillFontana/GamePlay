@@ -90,6 +90,7 @@ export function Home() {
             renderItem={({ item }) => (
               <Appointment
                 data={item}
+                key={item.id}
                 onPress={() => handleAppointmentDetails(item)}
               />
             )}
