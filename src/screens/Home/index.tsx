@@ -28,8 +28,8 @@ export function Home() {
     categoryId === category ? setCategory("") : setCategory(categoryId);
   }
 
-  function handleAppointmentDetails() {
-    navigation.navigate("AppointmentDetails");
+  function handleAppointmentDetails(guildSelected: AppointmentProps) {
+    navigation.navigate("AppointmentDetails", { guildSelected });
   }
 
   function handleAppointmentCreate() {
@@ -88,7 +88,10 @@ export function Home() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 69 }}
             renderItem={({ item }) => (
-              <Appointment data={item} onPress={handleAppointmentDetails} />
+              <Appointment
+                data={item}
+                onPress={() => handleAppointmentDetails(item)}
+              />
             )}
             ItemSeparatorComponent={() => <ListDivider />}
           />
